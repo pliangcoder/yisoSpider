@@ -6,14 +6,8 @@ from win10toast import ToastNotifier
 from random_sleep import random_sleep
 import random
 
-"""
-readme:
-yiso（易搜网站）爬虫 
-网址：https://yiso.fun
-"""
 
-
-def get_json_files(url):  # 请求数据的函数
+def get_json_files(url):
     try:
         response = requests.get(url, headers=__yiso_headers, timeout=20)
         jsonfiles = response.json()
@@ -27,26 +21,24 @@ def get_json_files(url):  # 请求数据的函数
             return _new_search_list
 
 
-def _analysis_equipment(json_file):  # 解析函数  核心逻辑
+def _analysis_equipment(json_file): 
 
     _analysis_failed = 0
     if json_file is None:
-        return _analysis_failed  # 如果没有数据返回失败
+        return _analysis_failed 
     else:
         for num in range(0, 10):
-            if json_file["data"]["list"][num]["creatorName"] == "老***盘":  # 标题党跳过
-                pass
+            if json_file["data"]["list"][num]["creatorName"] == "老***盘": 
             else:
-                aliyunurl = json_file["data"]["list"][num]["url"]  # 解析数据
+                aliyunurl = json_file["data"]["list"][num]["url"] 
                 file_name = json_file["data"]["list"][num]["fileInfos"][0]["fileName"]
                 if int(switch_mode) == 1:
-                    if (file_name == search_name) or (file_name in search_name) or (search_name in file_name):  #
-                        # 查询字符串是否在字符串中
-                        if aliyunurl in url_list:  # 数组去重
+                    if (file_name == search_name) or (file_name in search_name) or (search_name in file_name):
+                        if aliyunurl in url_list: 
                             pass
-                        elif file_name in name_list:  # 名字数组去重
+                        elif file_name in name_list: 
                             pass
-                        elif aliyunurl in compare_list:  # 文件去重，防止重复 抓取
+                        elif aliyunurl in compare_list: 
                             pass
                         else:
                             print("---------精准查找找到-------")
@@ -56,11 +48,11 @@ def _analysis_equipment(json_file):  # 解析函数  核心逻辑
                             name_list.append(file_name)
                 else:
 
-                    if aliyunurl in url_list:  # 数组去重
+                    if aliyunurl in url_list: 
                         pass
-                    elif file_name in name_list:  # 名字去重
+                    elif file_name in name_list:  
                         pass
-                    elif aliyunurl in compare_list:  # 文件去重，防止重复 抓取
+                    elif aliyunurl in compare_list:  
                         pass
                     else:
                         if file_name == search_name:
@@ -73,28 +65,10 @@ def _analysis_equipment(json_file):  # 解析函数  核心逻辑
         _analysis_failed = 1
         return _analysis_failed
 
-    #     try:
-    #         if end_time is None or end_time is None:
-    #             time.sleep(*start_time)
-    #         elif end_time in None and end_time is None:
-    #             time.sleep(2)
-    #         else:
-    #
-    #             else:
-    #                 raise "error type"
-    #     except:
-    #         time.sleep(2)
-    # except:
-    #     raise "error type"
-
-    # if start_time - int(start_time) or end_time - int(end_time) != 0:  # 判断是不是整数
-    #
-    #     time.sleep(random.uniform(start_time, end_time))
-    # else:
-    #     time.sleep(random.randint(start_time, end_time))
 
 
-def save_url_and_name_into_file(url_lists, name_lists):  # 文件保存
+
+def save_url_and_name_into_file(url_lists, name_lists): 
     f = open("url_path/url.txt", mode="a+", encoding="utf-8")
     kong = "                                   "
     f.write(kong)
@@ -104,7 +78,7 @@ def save_url_and_name_into_file(url_lists, name_lists):  # 文件保存
     f_times = f"<---文件写入时间--->>>>>  {files_time}"
     f.write(f_times)
     f.write('\n')
-    for aliyun_url_name, aliyun_url in zip(name_lists, url_lists):  # 用zip函数同时遍历两个列表
+    for aliyun_url_name, aliyun_url in zip(name_lists, url_lists):
         f.write("标题：")
         f.write(aliyun_url_name)
         f.write("   ")
@@ -123,7 +97,7 @@ def read_url_files():
     return init_list
 
 
-def get_random_useragent():  # 构造随机请求头
+def get_random_useragent(): 
     f = open(r"F://Note//url_path//headers_list.json", mode="r", encoding="utf-8")
     agent = json.load(f)
     every_agent_list = agent["headers"]["Chrome"]
