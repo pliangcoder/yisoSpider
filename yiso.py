@@ -29,6 +29,7 @@ def _analysis_equipment(json_file):
     else:
         for num in range(0, 10):
             if json_file["data"]["list"][num]["creatorName"] == "老***盘": 
+                pass
             else:
                 aliyunurl = json_file["data"]["list"][num]["url"] 
                 file_name = json_file["data"]["list"][num]["fileInfos"][0]["fileName"]
